@@ -32,32 +32,19 @@ const ConnectWalletModal = ({
     }
   }
 
-  const disconnectWallets = async () => {
-    try {
-      for (const wallet of wallets) {
-        if (wallet.isConnected) {
-          await wallet.disconnect()
-        }
-      }
-      toast.success("Disconnected from all wallets")
-      onClose()
-    } catch (error) {
-      console.error(error)
-      toast.error("Failed to disconnect wallets")
-    }
-  }
-
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50" onClick={onClose}>
+    <div
+      className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50"
+      onClick={onClose}
+    >
       <div
-        className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md p-6 flex flex-col items-center justify-center translate-y-60"
+        className="bg-white rounded-lg shadow-xl w-full max-w-md p-6"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex justify-between items-center w-full mb-4">
-          <h3 className="text-lg font-medium">Connect to a wallet</h3>
+        <div className="flex justify-end w-full mb-4">
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+            className="text-gray-500 hover:text-gray-700"
           >
             <span className="sr-only">Close</span>
             <svg
@@ -67,28 +54,25 @@ const ConnectWalletModal = ({
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
 
-        <div className="space-y-2 w-full">
+        <div className="space-y-4 w-full px-4">
           {wallets.map((wallet) => (
             <div
               onClick={() => handleWalletClick(wallet)}
               key={wallet.id}
-              className={`flex justify-between items-center p-3 rounded-lg cursor-pointer transition-colors w-full
-                ${
-                  wallet.isConnected
-                    ? "bg-green-50 border border-green-200 hover:bg-green-100"
-                    : "bg-gray-50 border border-gray-200 hover:bg-gray-100 dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600"
-                }`}
+              className="flex justify-between items-center p-4 rounded-lg cursor-pointer transition-colors w-full bg-gray-50 border border-gray-200 hover:bg-gray-100"
             >
-              <span className="font-medium">
-                {wallet.metadata.name}{" "}
-                {wallet.activeAccount &&
-                  `[${wallet.activeAccount.address.slice(0, 3)}...${wallet.activeAccount.address.slice(-3)}]`}
-                {wallet.isActive && ` (active)`}
+              <span className="text-gray-800 text-base font-medium">
+                {wallet.metadata.name}
               </span>
               <img
                 src={wallet.metadata.icon || "/placeholder.svg?height=24&width=24"}
@@ -97,27 +81,15 @@ const ConnectWalletModal = ({
               />
             </div>
           ))}
-
-          {activeAccount && (
-            <div
-              onClick={disconnectWallets}
-              className="flex justify-between items-center p-3 rounded-lg cursor-pointer transition-colors bg-red-50 border border-red-200 hover:bg-red-100 mt-4 w-full"
-            >
-              <span className="font-medium text-red-600">
-                Disconnect{" "}
-                {activeAccount && `[${activeAccount.address.slice(0, 3)}...${activeAccount.address.slice(-3)}]`}
-              </span>
-            </div>
-          )}
         </div>
 
-        <div className="mt-6 pt-4 border-t text-sm text-center text-gray-500 dark:text-gray-400 w-full">
+        <div className="mt-8 pt-4 border-t text-sm text-center text-gray-500 w-full">
           <span>New to Algorand? </span>
           <a
             href="https://algorand.com/wallets"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-green-600 hover:text-green-700 dark:text-green-500 dark:hover:text-green-400"
+            className="text-green-600 hover:text-green-700"
           >
             Learn more about wallets
           </a>

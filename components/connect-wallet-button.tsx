@@ -14,7 +14,7 @@ export function ConnectWalletButton() {
 
   return (
     <>
-      <Button onClick={openModal} className="bg-white hover:bg-white/90 text-black">
+<Button onClick={openModal} className="bg-white hover:bg-white/90 !text-black">
         {activeAccount ? `${activeAccount.address.slice(0, 4)}...${activeAccount.address.slice(-4)}` : "Connect Wallet"}
       </Button>
 
